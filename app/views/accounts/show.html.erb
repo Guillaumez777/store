@@ -1,0 +1,13 @@
+<% content_for :title, "Mon compte" %>
+
+<h1>Mon compte</h1>
+
+<div class="account-card">
+  <p><strong><%= User.human_attribute_name(:email_address) %> :</strong> <%= current_user.email_address %></p>
+  <p class="text-muted">Membre depuis <%= l(current_user.created_at, format: :long) %></p>
+</div>
+
+<div class="actions">
+  <%= link_to "Modifier mon mot de passe", new_password_path %> ·
+  <%= link_to "Retour aux produits", products_path %>
+</div>

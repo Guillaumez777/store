@@ -1,0 +1,14 @@
+one:
+  title: Acheter du café
+  completed: false
+  user: one
+
+two:
+  title: Préparer la démo
+  completed: true
+  user: one
+
+three:
+  title: Répondre aux emails
+  completed: false
+  user: two

@@ -1,0 +1,10 @@
+<% content_for :title, "Modifier #{@product.name}" %>
+
+<h1>Modifier le produit</h1>
+
+<%= render "form", product: @product %>
+
+<div class="actions">
+  <%= link_to "Voir", @product %> |
+  <%= link_to "Retour à la liste", products_path %>
+</div>

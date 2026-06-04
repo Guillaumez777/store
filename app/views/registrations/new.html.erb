@@ -1,0 +1,39 @@
+<% content_for :title, "Créer un compte" %>
+
+<h1>Créer un compte</h1>
+
+<%= form_with model: @user, url: registration_path, class: "auth-form" do |form| %>
+  <% if @user.errors.any? %>
+    <div class="form-errors" role="alert">
+      <h2><%= pluralize(@user.errors.count, "erreur") %> empêche<%= "nt" unless @user.errors.one? %> l'inscription :</h2>
+      <ul>
+        <% @user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :email_address %>
+    <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username" %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password %>
+    <%= form.password_field :password, required: true, autocomplete: "new-password", maxlength: 72 %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password_confirmation %>
+    <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", maxlength: 72 %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "S'inscrire" %>
+  </div>
+<% end %>
+
+<p class="auth-links">
+  Déjà un compte ? <%= link_to "Se connecter", new_session_path %>
+</p>

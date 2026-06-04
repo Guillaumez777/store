@@ -1,0 +1,19 @@
+fr:
+  activerecord:
+    models:
+      product:
+        one: Produit
+        other: Produits
+    attributes:
+      product:
+        name: Nom
+    errors:
+      models:
+        product:
+          attributes:
+            name:
+              blank: doit être renseigné
+  products:
+    created: Produit créé avec succès.
+    updated: Produit mis à jour avec succès.
+    destroyed: Produit supprimé avec succès.

@@ -1,0 +1,20 @@
+<% content_for :title, "Produits" %>
+
+<h1>Produits</h1>
+
+<div id="products">
+  <% if @products.any? %>
+    <% @products.each do |product| %>
+      <%= render product %>
+      <p class="actions">
+        <%= link_to "Voir", product %> |
+        <%= link_to "Modifier", edit_product_path(product) %> |
+        <%= button_to "Supprimer", product, method: :delete %>
+      </p>
+    <% end %>
+  <% else %>
+    <p>Aucun produit pour le moment.</p>
+  <% end %>
+</div>
+
+<%= link_to "Nouveau produit", new_product_path, class: "button" %>

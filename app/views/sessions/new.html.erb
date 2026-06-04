@@ -1,0 +1,24 @@
+<% content_for :title, "Connexion" %>
+
+<h1>Connexion</h1>
+
+<%= form_with url: session_path, class: "auth-form" do |form| %>
+  <div class="field">
+    <%= form.label :email_address, User.human_attribute_name(:email_address) %>
+    <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address] %>
+  </div>
+
+  <div class="field">
+    <%= form.label :password, User.human_attribute_name(:password) %>
+    <%= form.password_field :password, required: true, autocomplete: "current-password", maxlength: 72 %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Se connecter" %>
+  </div>
+<% end %>
+
+<p class="auth-links">
+  <%= link_to "Mot de passe oublié ?", new_password_path %> ·
+  <%= link_to "Créer un compte", new_registration_path %>
+</p>

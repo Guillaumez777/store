@@ -1,0 +1,21 @@
+<%= form_with(model: product) do |form| %>
+  <% if product.errors.any? %>
+    <div class="form-errors" role="alert">
+      <h2><%= pluralize(product.errors.count, "erreur") %> empêche<%= "nt" unless product.errors.one? %> l'enregistrement :</h2>
+      <ul>
+        <% product.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name, autofocus: true %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit product.persisted? ? "Mettre à jour" : "Créer" %>
+  </div>
+<% end %>

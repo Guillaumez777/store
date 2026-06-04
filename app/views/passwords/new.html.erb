@@ -1,0 +1,20 @@
+<% content_for :title, "Mot de passe oublié" %>
+
+<h1>Mot de passe oublié</h1>
+
+<p>Indiquez votre adresse e-mail pour recevoir un lien de réinitialisation.</p>
+
+<%= form_with url: passwords_path, class: "auth-form" do |form| %>
+  <div class="field">
+    <%= form.label :email_address, User.human_attribute_name(:email_address) %>
+    <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", value: params[:email_address] %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Envoyer les instructions" %>
+  </div>
+<% end %>
+
+<p class="auth-links">
+  <%= link_to "Retour à la connexion", new_session_path %>
+</p>

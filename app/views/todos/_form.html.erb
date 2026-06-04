@@ -1,0 +1,6 @@
+<%= form_with model: todo, class: "todo-form" do |form| %>
+  <div class="todo-form__row">
+    <%= form.text_field :title, placeholder: "Ex. : Préparer la réunion, acheter du café…", required: true, autofocus: true, class: "todo-form__input" %>
+    <%= form.submit "Ajouter", class: "btn btn--primary" %>
+  </div>
+<% end %>

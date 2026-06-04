@@ -1,0 +1,10 @@
+<% content_for :title, @product.name %>
+
+<%= render @product %>
+
+<div class="actions">
+  <%= link_to "Modifier", edit_product_path(@product) %> |
+  <%= link_to "Retour à la liste", products_path %>
+
+  <%= button_to "Supprimer", @product, method: :delete %>
+</div>
