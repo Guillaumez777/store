@@ -17,3 +17,7 @@ fr:
     created: Produit créé avec succès.
     updated: Produit mis à jour avec succès.
     destroyed: Produit supprimé avec succès.
+  todos:
+    created: Tâche ajoutée.
+    updated: Tâche mise à jour.
+    destroyed: Tâche supprimée.

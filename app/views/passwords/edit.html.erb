@@ -1,19 +1,9 @@
-<% content_for :title, "Nouveau mot de passe" %>
+<h1>Update your password</h1>
 
-<h1>Nouveau mot de passe</h1>
+<%= tag.div(flash[:alert], style: "color:red") if flash[:alert] %>
 
-<%= form_with url: password_path(params[:token]), method: :put, class: "auth-form" do |form| %>
-  <div class="field">
-    <%= form.label :password, User.human_attribute_name(:password) %>
-    <%= form.password_field :password, required: true, autocomplete: "new-password", maxlength: 72 %>
-  </div>
-
-  <div class="field">
-    <%= form.label :password_confirmation, User.human_attribute_name(:password_confirmation) %>
-    <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", maxlength: 72 %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit "Enregistrer" %>
-  </div>
+<%= form_with url: password_path(params[:token]), method: :put do |form| %>
+  <%= form.password_field :password, required: true, autocomplete: "new-password", placeholder: "Enter new password", maxlength: 72 %><br>
+  <%= form.password_field :password_confirmation, required: true, autocomplete: "new-password", placeholder: "Repeat new password", maxlength: 72 %><br>
+  <%= form.submit "Save" %>
 <% end %>

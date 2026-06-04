@@ -1,123 +1,91 @@
-<% content_for :title, "Store — Todos & Produits" %>
-<% content_for :body_class, "body--home" %>
-<% content_for :show_footer, true %>
+<% content_for :title, "Mes tâches — Accueil" %>
+<% content_for :body_class, "landing" %>
 
-<section class="hero" id="accueil">
-  <div class="hero__content">
-    <p class="hero__eyebrow">Votre espace personnel</p>
-    <h1 class="hero__title">Organisez votre journée,<br>découvrez nos produits</h1>
-    <p class="hero__lead">
-      Une page unique pour gérer vos todos et parcourir la boutique — simple, claire, agréable.
+<section class="landing-hero">
+  <div class="landing-hero__inner">
+    <p class="landing-hero__eyebrow">Votre espace de travail</p>
+    <h1 class="landing-hero__title">Toutes vos tâches,<br><em>au même endroit</em></h1>
+    <p class="landing-hero__lead">
+      Planifiez, suivez et cochez ce qui compte — une landing claire qui regroupe tout ce que vous avez à faire.
     </p>
-    <div class="hero__actions">
-      <a href="#todos" class="btn btn--primary">Voir mes todos</a>
-      <a href="#produits" class="btn btn--secondary">Explorer les produits</a>
-    </div>
-    <% if authenticated? %>
-      <div class="hero__stats">
-        <div class="stat-card">
-          <span class="stat-card__value"><%= @pending_count %></span>
-          <span class="stat-card__label">À faire</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-card__value"><%= @completed_count %></span>
-          <span class="stat-card__label">Terminées</span>
-        </div>
-        <div class="stat-card">
-          <span class="stat-card__value"><%= @products.size %></span>
-          <span class="stat-card__label">Produits</span>
-        </div>
-      </div>
-    <% end %>
-  </div>
-  <div class="hero__visual" aria-hidden="true">
-    <div class="hero__orb hero__orb--1"></div>
-    <div class="hero__orb hero__orb--2"></div>
-    <div class="hero__orb hero__orb--3"></div>
   </div>
 </section>
 
-<section class="section section--todos" id="todos">
-  <div class="section__inner">
-    <header class="section__header">
-      <h2 class="section__title">Mes todos</h2>
-      <p class="section__subtitle">Ajoutez, cochez et supprimez vos tâches en un clin d'œil.</p>
-    </header>
+<% if authenticated? %>
+  <section class="landing-stats" aria-label="Résumé des tâches">
+    <div class="landing-stats__inner">
+      <article class="stat">
+        <span class="stat__value"><%= @pending_todos.size %></span>
+        <span class="stat__label">À faire</span>
+      </article>
+      <article class="stat">
+        <span class="stat__value"><%= @completed_todos.size %></span>
+        <span class="stat__label">Terminées</span>
+      </article>
+      <article class="stat">
+        <span class="stat__value"><%= @todos.size %></span>
+        <span class="stat__label">Total</span>
+      </article>
+    </div>
+  </section>
 
-    <% if authenticated? %>
-      <div class="todos-panel">
-        <%= render "todos/form", todo: @todo %>
+  <section class="landing-tasks" id="taches">
+    <div class="landing-tasks__inner">
+      <%= render "todos/form", todo: @todo %>
 
-        <div class="todos-list" id="todos_list">
-          <% pending = @todos.pending %>
-          <% done = @todos.completed %>
+      <div class="task-groups">
+        <div class="task-group">
+          <header class="task-group__header">
+            <h2 class="task-group__title">
+              <span class="task-group__dot task-group__dot--pending"></span>
+              À faire
+              <span class="task-group__count"><%= @pending_todos.size %></span>
+            </h2>
+          </header>
 
-          <% if @todos.any? %>
-            <% if pending.any? %>
-              <h3 class="todos-list__heading">À faire</h3>
-              <ul class="todos-list__items">
-                <% pending.each do |todo| %>
-                  <%= render "todos/todo", todo: todo %>
-                <% end %>
-              </ul>
-            <% end %>
-
-            <% if done.any? %>
-              <h3 class="todos-list__heading todos-list__heading--done">Terminées</h3>
-              <ul class="todos-list__items todos-list__items--done">
-                <% done.each do |todo| %>
-                  <%= render "todos/todo", todo: todo %>
-                <% end %>
-              </ul>
-            <% end %>
+          <% if @pending_todos.any? %>
+            <ul class="task-list">
+              <% @pending_todos.each do |todo| %>
+                <%= render "todos/todo", todo: todo %>
+              <% end %>
+            </ul>
           <% else %>
-            <div class="empty-state">
-              <span class="empty-state__icon">☑</span>
-              <p>Aucune tâche pour l'instant. Ajoutez votre première todo ci-dessus !</p>
-            </div>
+            <p class="task-group__empty">Rien en attente — profitez-en ou ajoutez une nouvelle tâche.</p>
+          <% end %>
+        </div>
+
+        <div class="task-group task-group--done">
+          <header class="task-group__header">
+            <h2 class="task-group__title">
+              <span class="task-group__dot task-group__dot--done"></span>
+              Terminées
+              <span class="task-group__count"><%= @completed_todos.size %></span>
+            </h2>
+          </header>
+
+          <% if @completed_todos.any? %>
+            <ul class="task-list">
+              <% @completed_todos.each do |todo| %>
+                <%= render "todos/todo", todo: todo %>
+              <% end %>
+            </ul>
+          <% else %>
+            <p class="task-group__empty">Les tâches cochées apparaîtront ici.</p>
           <% end %>
         </div>
       </div>
-    <% else %>
-      <div class="guest-card">
-        <p>Connectez-vous pour créer et gérer vos todos.</p>
-        <div class="guest-card__actions">
-          <%= link_to "Connexion", new_session_path, class: "btn btn--primary" %>
-          <%= link_to "Créer un compte", new_registration_path, class: "btn btn--secondary" %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-</section>
+    </div>
+  </section>
+<% else %>
+  <section class="landing-guest">
+    <div class="landing-guest__card">
+      <h2>Connectez-vous pour voir vos tâches</h2>
+      <p>Votre liste personnelle (à faire et terminées) s’affichera ici une fois connecté.</p>
+      <%= link_to "Se connecter", new_session_path, class: "btn btn--primary btn--lg" %>
+    </div>
+  </section>
+<% end %>
 
-<section class="section section--products" id="produits">
-  <div class="section__inner">
-    <header class="section__header">
-      <h2 class="section__title">Produits</h2>
-      <p class="section__subtitle">Notre sélection du moment.</p>
-    </header>
-
-    <% if @products.any? %>
-      <div class="products-grid">
-        <% @products.each do |product| %>
-          <article class="product-card">
-            <div class="product-card__badge">Nouveau</div>
-            <h3 class="product-card__name"><%= product.name %></h3>
-            <%= link_to "Voir le détail →", product, class: "product-card__link" %>
-          </article>
-        <% end %>
-      </div>
-      <div class="section__footer">
-        <%= link_to "Voir tous les produits", products_path, class: "btn btn--secondary" %>
-        <% if authenticated? %>
-          <%= link_to "Ajouter un produit", new_product_path, class: "btn btn--primary" %>
-        <% end %>
-      </div>
-    <% else %>
-      <div class="empty-state">
-        <span class="empty-state__icon">📦</span>
-        <p>Aucun produit disponible pour le moment.</p>
-      </div>
-    <% end %>
-  </div>
-</section>
+<footer class="landing-footer">
+  <p>Store — organisez votre journée.</p>
+</footer>

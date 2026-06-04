@@ -3,25 +3,26 @@ class TodosController < ApplicationController
 
   def create
     @todo = current_user.todos.build(todo_params)
+    
 
     if @todo.save
-      redirect_to root_path(anchor: "todos"), notice: t("todos.created")
+      redirect_to root_path, notice: t("todos.created")
     else
-      redirect_to root_path(anchor: "todos"), alert: @todo.errors.full_messages.to_sentence
+      redirect_to root_path, alert: @todo.errors.full_messages.to_sentence
     end
   end
 
   def update
     if @todo.update(todo_params)
-      redirect_to root_path(anchor: "todos"), notice: t("todos.updated")
+      redirect_to root_path, notice: t("todos.updated")
     else
-      redirect_to root_path(anchor: "todos"), alert: @todo.errors.full_messages.to_sentence
+      redirect_to root_path, alert: @todo.errors.full_messages.to_sentence
     end
   end
 
   def destroy
     @todo.destroy!
-    redirect_to root_path(anchor: "todos"), notice: t("todos.destroyed"), status: :see_other
+    redirect_to root_path, notice: t("todos.destroyed"), status: :see_other
   end
 
   private

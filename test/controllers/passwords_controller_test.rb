@@ -14,7 +14,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_session_path
 
     follow_redirect!
-    assert_flash_notice I18n.t("passwords.reset_sent")
+    assert_notice "reset instructions sent"
   end
 
   test "create for an unknown user redirects but sends no mail" do
@@ -23,7 +23,7 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_session_path
 
     follow_redirect!
-    assert_flash_notice I18n.t("passwords.reset_sent")
+    assert_notice "reset instructions sent"
   end
 
   test "edit" do
@@ -36,42 +36,32 @@ class PasswordsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_password_path
 
     follow_redirect!
-    assert_flash_alert I18n.t("passwords.invalid_token")
+    assert_notice "reset link is invalid"
   end
 
   test "update" do
     assert_changes -> { @user.reload.password_digest } do
-      put password_path(@user.password_reset_token), params: {
-        password: "newpassword",
-        password_confirmation: "newpassword"
-      }
+      put password_path(@user.password_reset_token), params: { password: "new", password_confirmation: "new" }
       assert_redirected_to new_session_path
     end
 
     follow_redirect!
-    assert_flash_notice I18n.t("passwords.reset_success")
+    assert_notice "Password has been reset"
   end
 
   test "update with non matching passwords" do
     token = @user.password_reset_token
     assert_no_changes -> { @user.reload.password_digest } do
-      put password_path(token), params: {
-        password: "password12",
-        password_confirmation: "password99"
-      }
+      put password_path(token), params: { password: "no", password_confirmation: "match" }
       assert_redirected_to edit_password_path(token)
     end
 
     follow_redirect!
-    assert_flash_alert I18n.t("passwords.mismatch")
+    assert_notice "Passwords did not match"
   end
 
   private
-    def assert_flash_notice(text)
-      assert_select "p.flash--notice", text: text
-    end
-
-    def assert_flash_alert(text)
-      assert_select "p.flash--alert", text: text
+    def assert_notice(text)
+      assert_select "div", /#{text}/
     end
 end

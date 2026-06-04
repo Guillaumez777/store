@@ -1,14 +1,14 @@
 one:
-  title: Acheter du café
+  title: Préparer la réunion
   completed: false
   user: one
 
 two:
-  title: Préparer la démo
+  title: Envoyer le devis
   completed: true
   user: one
 
 three:
-  title: Répondre aux emails
+  title: Relancer le client
   completed: false
   user: two
