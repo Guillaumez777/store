@@ -8,5 +8,6 @@ class HomeController < ApplicationController
     @todo = current_user.todos.build
     @pending_todos = @todos.pending
     @completed_todos = @todos.completed
+    puts "dd index home depuis le puts home, #{@todos}"
   end
 end

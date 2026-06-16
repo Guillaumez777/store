@@ -3,8 +3,8 @@ class TodosController < ApplicationController
 
   def create
     @todo = current_user.todos.build(todo_params)
+    puts "Titre : #{@todo.title}, come back soon."
     
-
     if @todo.save
       redirect_to root_path, notice: t("todos.created")
     else
