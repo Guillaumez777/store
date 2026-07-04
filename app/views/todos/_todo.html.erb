@@ -1,9 +1,13 @@
 <li id="<%= dom_id todo %>" class="task-item <%= "task-item--done" if todo.completed? %>">
-  <%= button_to todo_path(todo), method: :patch, params: { todo: { completed: !todo.completed? } }, class: "task-item__check", title: todo.completed? ? "Marquer à faire" : "Marquer terminée" do %>
-    <span aria-hidden="true"><%= todo.completed? ? "✓" : "" %></span>
+  <%= button_to todo_path(todo),
+      method: :patch,
+      params: { todo: { completed: !todo.completed? } },
+      class: "task-item__toggle",
+      form: { class: "task-item__toggle-form" },
+      title: todo.completed? ? "Marquer à faire" : "Marquer terminée" do %>
+    <span class="task-item__check" aria-hidden="true"><%= todo.completed? ? "✓" : "" %></span>
+    <span class="task-item__label"><%= todo.title %></span>
   <% end %>
-
-  <span class="task-item__label"><%= todo.title %></span>
 
   <%= button_to todo_path(todo), method: :delete, class: "task-item__remove", title: "Supprimer" do %>
     <span aria-hidden="true">×</span>
